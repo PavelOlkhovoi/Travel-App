@@ -6,20 +6,28 @@ let formHandler = (event) => {
     event.preventDefault();
     let inputs = document.querySelectorAll('.main__input');
     let fieldsValue = validatePattern(inputs);
+    let weather, geonames, pixabay;
     if(fieldsValue){
         console.log('We can start fetching');
-        let city = fetchCityName(fieldsValue.city)
+        getKey()
+        .then(res => {
+            weather = res.weather;
+            geonames = res.geonames;
+            pixabay = res.pixabay;
+            console.log(weather, geonames, pixabay)
+        })
+        .then(keys => fetchCityName(fieldsValue.city, geonames))
         .then(res => {
             fieldsValue.city = res.toponymName;
             return res; 
         })
         .then(res => {
             let {lat, lng} = res;
-            return fetchPredictWeather(lat, lng)
+            return fetchPredictWeather(lat, lng, weather)
         })
         .then(res => {
            console.log(res);
-           return fetchFoto(fieldsValue.city)
+           return fetchFoto(fieldsValue.city, pixabay)
         })
         .then(res => console.log(res))
         .catch(err=> console.log('СДержанный катч'));
@@ -57,9 +65,9 @@ let validatePattern = (inputs) => {
     return status ? result : status;
 }
 
-let fetchCityName = async (name) => {
+let fetchCityName = async (name, geonames) => {
 
-    let response = await fetch(`http://api.geonames.org/searchJSON?q=${name}&maxRows=1&username=pavelolkhovoi`);
+    let response = await fetch(`http://api.geonames.org/searchJSON?q=${name}&maxRows=1&username=${geonames}`);
         let data = await response.json();
         if(data.totalResultsCount !== 0){
             return data.geonames[0];
@@ -70,9 +78,9 @@ let fetchCityName = async (name) => {
         }
 }
 
-let fetchPredictWeather = async (lat, lon) => {
+let fetchPredictWeather = async (lat, lon, key) => {
     try{
-        let response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=35.7796&lon=-78.6382&key=a60aff09356a4ffeab2c9ea4465515ad`);
+        let response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}`);
         let data = await response.json();
         return data.data;
     }catch(err) {
@@ -80,8 +88,8 @@ let fetchPredictWeather = async (lat, lon) => {
     }
 }
 
-let fetchFoto = async(cityName) => {
-    let response = await fetch(`https://pixabay.com/api/?key=26063809-1bee4e29e3fc543870529c15a&q=${cityName}&image_type=photo`);
+let fetchFoto = async(cityName, key) => {
+    let response = await fetch(`https://pixabay.com/api/?key=${key}&q=${cityName}&image_type=photo`);
     let data = await response.json();
     return data.hits[0].webformatURL;
 }

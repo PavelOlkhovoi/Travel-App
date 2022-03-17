@@ -28,11 +28,13 @@ app.use(express.static(path.resolve(rootPath, 'dist')))
 app.get('/', function (req, res) {
     res.sendFile(distPath)
 })
-// Object with key for API
+// Object with keys for API
 const keyAPI = {
-  key: process.env.API_KEY
+  weather: process.env.WEATHER_KEY,
+  geonames: process.env.GEONAMES,
+  pixabay: process.env.PIXABAY_KEY
 }
-// Route to get the API key
+// Route to get the API keys
 app.get('/key', (req, res)=> {
     res.json(keyAPI);
 })
