@@ -1,0 +1,118 @@
+@import './base';
+
+body {
+    background-color: $colorBlue;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+em {
+    font-weight: 900;
+}
+
+.wrapper {
+    padding: 15px;
+    text-align: center;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* HEAD SECTION */
+
+.head__title {
+    color: $layout-phone;
+    padding-top: 6vh;
+    padding-bottom: 3vh;
+    font-size: 36px;
+    font-weight: 900;
+}
+
+.head__text {
+    padding: 3vh 0;
+    @media screen and (min-width: $layout-phone) {
+        width: 400px;
+        margin: 0 auto;
+    }
+}
+
+
+/* FORM SECTION */
+
+
+
+.main {
+    &__form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        background-color: #E9E9E9;
+        padding: 40px;
+        border-radius: 32px;
+    }
+
+    & label {
+        margin-bottom: 16px;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    &__input{
+        padding: 26px 0;
+        text-align: center;
+        margin-bottom: 14px;
+        padding: 16px;
+        height: 66px;
+        margin: 0 10px;
+        border-radius: 10px;
+        border-color: #e2e2e2;
+        background-color: #f5efef;
+
+        @media screen and (min-width: $layout-phone) {
+            // width: 400px;
+        }
+    }
+
+    &__col {
+        flex: 1 1 175px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__btn {
+        @extend .main__input;
+        color: white;
+        background-color: #3075C6;
+        border-color: transparent;
+        width: 92px;
+        height: 66px;
+        border-radius: 10px;
+        margin-top: auto;
+    }
+}
+
+/* RESPONSE SECTION */
+.reply {
+    display: block;
+}
+.reply.active {
+    display: block;
+}
+
+.reply__title {
+    font-size: 24px;
+    font-weight: 900;
+    padding: 3vh 0;
+}
+
+.main__error {
+    color:rgb(231, 13, 24)
+}
+
+.reply__message {
+    line-height: 1.4;
+}

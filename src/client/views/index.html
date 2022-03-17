@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test node configuratio</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <head class="head">
+                <h1 class="head__title">
+                    Travel planer
+                </h1>
+                <p class="head__text">
+                    Check the weather in the cities that you plan to visit. You can use only 16 days for planning. We can not predict the weather for more than 16 days.                 </p>
+            </head>
+            <main class="main">
+                <form action="/test" method="get" class="main__form">
+                    <div class="main__col">
+                        <label for="link">Location</label>
+                        <input type="text" id="link" data-validation="city" placeholder="Type your destination" class="main__input">
+                    </div>
+
+                    <div class="main__col">
+                        <label for="start-data">Arrival date</label>
+                        <input type="date" id="start-data" data-validation="start" placeholder="Type your arrival date" class="main__input"
+                        min="2022-03-15"
+                        max="2022-03-31"
+                        >
+                    </div>
+
+                    <div class="main__col">
+                        <label for="">Leaving day</label>
+                        <input type="date" id="finish-data" data-validation="finish" placeholder="Enter the date of your departure" class="main__input"
+                        min="2022-03-15"
+                        max="2022-03-31"
+                        >
+                    </div>
+
+                    <button type="submit" class="main__btn btn">Get started</button>
+                </form>
+                <p class="main__error"></p>
+                <section class="reply">
+                    <div class="reply__title">
+                        You have already choose
+                    </div>
+
+                    <div class="reply__directions">
+                        <div class="reply__card card">
+                            <div class="card__container">
+                                <div class="card__foto">
+                                    <div class="card__foto-wrap">
+                                        <img src="" alt="" class="card__image">
+                                    </div>
+                                </div>
+                                <div class="card__info">
+                                    <h2 class="card__title">My trip to:</h2>
+                                    <span class="card__departing">02/03/03</span>
+                                    <span class="card__last-day">12/03/03</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
