@@ -1,4 +1,5 @@
 import { cardTemplate } from './factory-html'
+import { dateFormatting, getNumberOfDays} from './dates';
 
 /**
 * @description Form Handler evokes validate and fetch API functions 
@@ -42,38 +43,48 @@ let formHandler = (event) => {
                 temp: 'Temperature',
                 pop: 'Probability of Precipitation',
                 clouds: 'Average total cloud coverage'
+            };
 
+            let colWeather = card.querySelector('.card__weather');
 
-            }
             for(let i = 0; i < res.length; i++){
-                if(i < 7){
-                    for(let key in res[i]){
-                        if(key == 'datetime' || key == 'wind_spd' || key == 'temp' || key == 'pop' || key == 'clouds'){
-                            let colWeather = card.querySelector('.card__weather');
-                            let ul = document.createElement('ul');
-                            let li = document.createElement('li');
+                let dayDifference = getNumberOfDays(fieldsValue.start);
+                if(dayDifference < 6 && i < 7){
+                    let ul = document.createElement('ul');
+                    colWeather.insertAdjacentElement('beforeend', ul);
 
-                            colWeather.insertAdjacentElement('beforeend', ul);
-                            ul.insertAdjacentElement('beforeend', li);
+                    for(let key in res[i]){
+                        let li = document.createElement('li');
+
+                        if(textFields[key]){
                             
                             if(key == 'wind_spd'){
                                 li.innerHTML = `${textFields[key]} --- ${res[i][key]} m/s`;
+                                
+                                ul.insertAdjacentElement('beforeend', li);
                             }
 
                             if(key == 'temp'){
                                 li.innerHTML = `${textFields[key]} --- ${res[i][key]} Celcius`;
+                                
+                                ul.insertAdjacentElement('beforeend', li);
                             }
 
                             if(key == 'pop' || key == 'clouds') {
-                                li.innerHTML = `${textFields[key]} --- ${res[i][key]} %`;
+                                li.innerHTML = `${textFields[key]} --- ${res[i][key]}%`;
+                                
+                                 ul.insertAdjacentElement('beforeend', li);
                             }
 
                             if(key == 'datetime') {
-                                li.innerHTML = `${textFields[key]} --- ${res[i][key]}`;
+                                li.innerHTML = dateFormatting(res[i][key]);
+                                ul.insertAdjacentElement('afterbegin', li);
                             }
                             
                         }
                     }
+                }else {
+                    
                 }
             }
            return fetchFoto(fieldsValue.city, pixabay)
