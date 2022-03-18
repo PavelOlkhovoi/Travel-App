@@ -1,3 +1,5 @@
+import { cardTemplate } from './factory-html'
+
 /**
 * @description Form Handler evokes validate and fetch API functions 
 * @param {event} Click - Should be a button 
@@ -7,6 +9,7 @@ let formHandler = (event) => {
     let inputs = document.querySelectorAll('.main__input');
     let fieldsValue = validatePattern(inputs);
     let weather, geonames, pixabay;
+    let card = cardTemplate();
     if(fieldsValue){
         console.log('We can start fetching');
         getKey()
@@ -14,11 +17,17 @@ let formHandler = (event) => {
             weather = res.weather;
             geonames = res.geonames;
             pixabay = res.pixabay;
-            console.log(weather, geonames, pixabay)
         })
         .then(keys => fetchCityName(fieldsValue.city, geonames))
         .then(res => {
+            let title = card.querySelector('.card__title');
+            let start = card.querySelector('.card__departing');
+            let finish = card.querySelector('.card__last-day');
             fieldsValue.city = res.toponymName;
+            title.innerHTML = fieldsValue.city;
+            start.innerHTML = `Start of the trip ${fieldsValue.start}`
+            finish.innerHTML = `Finish of the trip ${fieldsValue.finish}`;
+            console.log(card);
             return res; 
         })
         .then(res => {
@@ -26,11 +35,59 @@ let formHandler = (event) => {
             return fetchPredictWeather(lat, lng, weather)
         })
         .then(res => {
-           console.log(res);
+            console.log(res);
+            let textFields = {
+                datetime: 'Forecast valid date',
+                wind_spd: 'Wind speed',
+                temp: 'Temperature',
+                pop: 'Probability of Precipitation',
+                clouds: 'Average total cloud coverage'
+
+
+            }
+            for(let i = 0; i < res.length; i++){
+                if(i < 7){
+                    for(let key in res[i]){
+                        if(key == 'datetime' || key == 'wind_spd' || key == 'temp' || key == 'pop' || key == 'clouds'){
+                            let colWeather = card.querySelector('.card__weather');
+                            let ul = document.createElement('ul');
+                            let li = document.createElement('li');
+
+                            colWeather.insertAdjacentElement('beforeend', ul);
+                            ul.insertAdjacentElement('beforeend', li);
+                            
+                            if(key == 'wind_spd'){
+                                li.innerHTML = `${textFields[key]} --- ${res[i][key]} m/s`;
+                            }
+
+                            if(key == 'temp'){
+                                li.innerHTML = `${textFields[key]} --- ${res[i][key]} Celcius`;
+                            }
+
+                            if(key == 'pop' || key == 'clouds') {
+                                li.innerHTML = `${textFields[key]} --- ${res[i][key]} %`;
+                            }
+
+                            if(key == 'datetime') {
+                                li.innerHTML = `${textFields[key]} --- ${res[i][key]}`;
+                            }
+                            
+                        }
+                    }
+                }
+            }
            return fetchFoto(fieldsValue.city, pixabay)
         })
-        .then(res => console.log(res))
-        .catch(err=> console.log('СДержанный катч'));
+        .then(res => {
+            let image = card.querySelector('.card__image');
+            image.src = res;
+            console.log(res);
+
+            document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
+
+            return res;
+        })
+        .catch(err => console.log('СДержанный катч', err));
     }
     
 }
@@ -89,9 +146,13 @@ let fetchPredictWeather = async (lat, lon, key) => {
 }
 
 let fetchFoto = async(cityName, key) => {
-    let response = await fetch(`https://pixabay.com/api/?key=${key}&q=${cityName}&image_type=photo`);
-    let data = await response.json();
-    return data.hits[0].webformatURL;
+    try{
+        let response = await fetch(`https://pixabay.com/api/?key=${key}&q=${cityName}&image_type=photo`);
+        let data = await response.json();
+        return data.hits[0].webformatURL;
+    }catch(err){
+        console.log(err);
+    }
 }
 
 
