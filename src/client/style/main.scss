@@ -99,6 +99,9 @@ em {
 /* RESPONSE SECTION */
 .reply {
     display: block;
+    &__weather {
+        margin: 0 auto;
+    }
 }
 .reply.active {
     display: block;

@@ -26,8 +26,8 @@ let formHandler = (event) => {
             let finish = card.querySelector('.card__last-day');
             fieldsValue.city = res.toponymName;
             title.innerHTML = fieldsValue.city;
-            start.innerHTML = `Start of the trip ${fieldsValue.start}`
-            finish.innerHTML = `Finish of the trip ${fieldsValue.finish}`;
+            start.innerHTML = `<em>Start of the trip</em> ${fieldsValue.start} `
+            finish.innerHTML = `<em>Finish of the trip</em> ${fieldsValue.finish}`;
             console.log(card);
             return res; 
         })
@@ -37,57 +37,8 @@ let formHandler = (event) => {
         })
         .then(res => {
             console.log(res);
-            let textFields = {
-                datetime: 'Forecast valid date',
-                wind_spd: 'Wind speed',
-                temp: 'Temperature',
-                pop: 'Probability of Precipitation',
-                clouds: 'Average total cloud coverage'
-            };
-
-            let colWeather = card.querySelector('.card__weather');
-
-            for(let i = 0; i < res.length; i++){
-                let dayDifference = getNumberOfDays(fieldsValue.start);
-                if(dayDifference < 6 && i < 7){
-                    let ul = document.createElement('ul');
-                    colWeather.insertAdjacentElement('beforeend', ul);
-
-                    for(let key in res[i]){
-                        let li = document.createElement('li');
-
-                        if(textFields[key]){
-                            
-                            if(key == 'wind_spd'){
-                                li.innerHTML = `${textFields[key]} --- ${res[i][key]} m/s`;
-                                
-                                ul.insertAdjacentElement('beforeend', li);
-                            }
-
-                            if(key == 'temp'){
-                                li.innerHTML = `${textFields[key]} --- ${res[i][key]} Celcius`;
-                                
-                                ul.insertAdjacentElement('beforeend', li);
-                            }
-
-                            if(key == 'pop' || key == 'clouds') {
-                                li.innerHTML = `${textFields[key]} --- ${res[i][key]}%`;
-                                
-                                 ul.insertAdjacentElement('beforeend', li);
-                            }
-
-                            if(key == 'datetime') {
-                                li.innerHTML = dateFormatting(res[i][key]);
-                                ul.insertAdjacentElement('afterbegin', li);
-                            }
-                            
-                        }
-                    }
-                }else {
-                    
-                }
-            }
-           return fetchFoto(fieldsValue.city, pixabay)
+            setupWeatherReader(card, res, fieldsValue);
+            return fetchFoto(fieldsValue.city, pixabay)
         })
         .then(res => {
             let image = card.querySelector('.card__image');
@@ -101,6 +52,68 @@ let formHandler = (event) => {
         .catch(err => console.log('СДержанный катч', err));
     }
     
+}
+
+let setupWeatherReader = (card, res, fieldsValue) => {
+    let textFields = {
+        datetime: 'Forecast valid date',
+        wind_spd: 'Wind speed',
+        temp: 'Temperature',
+        pop: 'Probability of Precipitation',
+        clouds: 'Average total cloud coverage'
+    };
+
+    let colWeather = card.querySelector('.card__weather');
+
+    for(let i = 0; i < res.length; i++){
+        let dayDifference = getNumberOfDays(fieldsValue.start);
+        if(dayDifference < 7 && i < 7){
+            let ul = document.createElement('ul');
+            colWeather.insertAdjacentElement('beforeend', ul);
+            typeOfWeather(res[i], ul, textFields);
+            console.log('Aaaaaaaaaaaaaaaaa')
+
+        }else {
+            console.log('Bbbbbbbbbbbbbbbbbb');
+        }
+
+        if(dayDifference > 6 && i > 8){
+            let ul = document.createElement('ul');
+            colWeather.insertAdjacentElement('beforeend', ul);
+            typeOfWeather(res[i], ul, textFields);
+        }
+    }
+}
+
+let typeOfWeather = (resArr, ul, textFields) => {
+    for(let key in resArr){
+        let li = document.createElement('li');
+
+        if(textFields[key]){
+            
+            if(key == 'wind_spd'){
+                renderLi(ul, li, `${textFields[key]} --- ${resArr[key]} m/s`);
+            }
+
+            if(key == 'temp'){
+                renderLi(ul, li, `${textFields[key]} --- ${resArr[key]} Celcius`);
+            }
+
+            if(key == 'pop' || key == 'clouds') {
+                renderLi(ul, li, `${textFields[key]} --- ${resArr[key]}%`);
+            }
+
+            if(key == 'datetime') {
+                renderLi(ul, li, dateFormatting(resArr[key]), 'afterbegin');
+            }
+            
+        }
+    }
+}
+
+let renderLi = (ul, li, text, place = 'beforeend') => {
+    li.innerHTML = text;
+    ul.insertAdjacentElement(place, li);
 }
 
 let validatePattern = (inputs) => {

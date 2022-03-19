@@ -9,15 +9,6 @@ let dateFormatting = (data)=> {
 let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-let checkDateToPredictWeather = (start) => {
-    let startData = start.split('-');
-    let today = new Date();
-    let day = today.getDate();
-    console.log(today.getDate());
-
-
-}
-
 let getNumberOfDays = (start) => {
     let rowData = start.split('-');
     const dateStart = new Date(rowData[0], rowData[1]-1, rowData[2]);
@@ -30,7 +21,6 @@ let getNumberOfDays = (start) => {
     const diffInTime = dateStart.getTime() - today.getTime();
 
     // Calculating the no. of days between two dates
-    // const diffInDays = Math.round(diffInTime / oneDay);
     const diffInDays = Math.round(diffInTime / oneDay);
 
     return diffInDays;
