@@ -131,19 +131,18 @@ let validatePattern = (inputs) => {
         let inputValidateName = input.dataset.validation
         let value = input.value.trim();
         let pattern = patterns[inputValidateName];
-        console.log(value);
         if(pattern.test(value)){
-            console.log('Ok');
             result[inputValidateName] = value;
+            removeError(input);
         }else {
-            console.log('False');
+            addError(input);
             status = false;
         }
     }
 
-
     return status ? result : status;
 }
+
 
 let fetchCityName = async (name, geonames) => {
 
@@ -152,9 +151,8 @@ let fetchCityName = async (name, geonames) => {
         if(data.totalResultsCount !== 0){
             return data.geonames[0];
         }else {
-            console.log('City not found');
+            addError(document.querySelector('.city'));
             throw new Error("City not found");
-            // renderError('City not found');
         }
 }
 
@@ -178,6 +176,16 @@ let fetchFoto = async(cityName, key) => {
     }
 }
 
+let addError = (input) => {
+    if(input.dataset.validation="city"){
+        input.placeholder = 'Wrong city name';
+    }
+    input.classList.add('err');
+}
+
+let removeError = (input) => {
+    input.classList.remove('err');
+}
 
 /**
 * @description Form validate 

@@ -9,6 +9,23 @@ let dateFormatting = (data)=> {
 let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+let getToday = () => {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth()+1;
+    let year = today.getFullYear();
+
+    if( day < 10 ){
+        day = '0' + day;
+      } 
+      if(month < 10){
+        month = '0' + month;
+      } 
+
+    return `${year}-${month}-${day}`;
+
+}
+
 let getNumberOfDays = (start) => {
     let rowData = start.split('-');
     const dateStart = new Date(rowData[0], rowData[1]-1, rowData[2]);
@@ -26,4 +43,4 @@ let getNumberOfDays = (start) => {
     return diffInDays;
 }
 
-export { dateFormatting, getNumberOfDays }
+export { dateFormatting, getNumberOfDays, getToday }

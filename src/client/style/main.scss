@@ -114,8 +114,12 @@ em {
     margin-top: 60px;
 }
 
-.main__error {
-    color:rgb(231, 13, 24)
+// .main__error {
+//     color:rgb(231, 13, 24)
+// }
+
+.main__input.err {
+    border: 3px solid $red;
 }
 
 .reply__message {
