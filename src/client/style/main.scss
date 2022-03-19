@@ -2,7 +2,8 @@
 @import './card.scss';
 
 body {
-    background-color: $colorBlue;
+    background-color: $colorDark;
+    color: $white;
 }
 
 p {
@@ -24,10 +25,10 @@ em {
 /* HEAD SECTION */
 
 .head__title {
-    color: $layout-phone;
+    color: $white;
     padding-top: 6vh;
     padding-bottom: 3vh;
-    font-size: 36px;
+    font-size: 64px;
     font-weight: 900;
 }
 
@@ -42,16 +43,14 @@ em {
 
 /* FORM SECTION */
 
-
-
 .main {
     &__form {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        background-color: #E9E9E9;
-        padding: 40px;
+        background-color: #29243C;
+        padding: 60px;
         border-radius: 32px;
     }
 
@@ -59,6 +58,7 @@ em {
         margin-bottom: 16px;
         font-size: 24px;
         font-weight: 700;
+        color: $white;
     }
 
     &__input{
@@ -69,8 +69,8 @@ em {
         height: 66px;
         margin: 0 10px;
         border-radius: 10px;
-        border-color: #e2e2e2;
-        background-color: #f5efef;
+        border-color: #E9A6A6;
+        background-color: #f1dddd;
 
         @media screen and (min-width: $layout-phone) {
             // width: 400px;
@@ -86,8 +86,8 @@ em {
 
     &__btn {
         @extend .main__input;
-        color: white;
-        background-color: #3075C6;
+        color: $white;
+        background-color: $blue;
         border-color: transparent;
         width: 92px;
         height: 66px;
@@ -111,6 +111,7 @@ em {
     font-size: 24px;
     font-weight: 900;
     padding: 3vh 0;
+    margin-top: 60px;
 }
 
 .main__error {

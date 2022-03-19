@@ -14,7 +14,8 @@
                     Travel planer
                 </h1>
                 <p class="head__text">
-                    Check the weather in the cities that you plan to visit. You can use only 16 days for planning. We can not predict the weather for more than 16 days.                 </p>
+                    Type the cities that you plan to visit. We can predict the weather in chosen cities only for the nearest 16 days.
+                </p>
             </head>
             <main class="main">
                 <form action="/test" method="get" class="main__form">
@@ -27,7 +28,6 @@
                         <label for="start-data">Arrival date</label>
                         <input type="date" id="start-data" data-validation="start" placeholder="Type your arrival date" class="main__input"
                         min="2022-03-15"
-                        max="2022-03-31"
                         >
                     </div>
 
@@ -35,7 +35,6 @@
                         <label for="">Leaving day</label>
                         <input type="date" id="finish-data" data-validation="finish" placeholder="Enter the date of your departure" class="main__input"
                         min="2022-03-15"
-                        max="2022-03-31"
                         >
                     </div>
 

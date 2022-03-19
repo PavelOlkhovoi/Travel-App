@@ -1,4 +1,4 @@
-import { cardTemplate } from './factory-html'
+import { cardTemplate, headOfCard } from './factory-html'
 import { dateFormatting, getNumberOfDays} from './dates';
 
 /**
@@ -21,14 +21,7 @@ let formHandler = (event) => {
         })
         .then(keys => fetchCityName(fieldsValue.city, geonames))
         .then(res => {
-            let title = card.querySelector('.card__title');
-            let start = card.querySelector('.card__departing');
-            let finish = card.querySelector('.card__last-day');
-            fieldsValue.city = res.toponymName;
-            title.innerHTML = fieldsValue.city;
-            start.innerHTML = `<em>Start of the trip</em> ${fieldsValue.start} `
-            finish.innerHTML = `<em>Finish of the trip</em> ${fieldsValue.finish}`;
-            console.log(card);
+            headOfCard(card, fieldsValue, res);
             return res; 
         })
         .then(res => {
@@ -47,6 +40,8 @@ let formHandler = (event) => {
 
             document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
 
+            clearForm();
+
             return res;
         })
         .catch(err => console.log('СДержанный катч', err));
@@ -54,13 +49,20 @@ let formHandler = (event) => {
     
 }
 
+let clearForm = () => {
+    let inputs = document.querySelectorAll('.main__input');
+    for(let i = 0; i < inputs.length; i++){
+        inputs[i].value = '';
+    }
+}
+
 let setupWeatherReader = (card, res, fieldsValue) => {
     let textFields = {
-        datetime: 'Forecast valid date',
+        datetime: 'Valid date',
         wind_spd: 'Wind speed',
         temp: 'Temperature',
-        pop: 'Probability of Precipitation',
-        clouds: 'Average total cloud coverage'
+        pop: 'Precipitation',
+        clouds: 'Cloud coverage'
     };
 
     let colWeather = card.querySelector('.card__weather');
@@ -71,12 +73,9 @@ let setupWeatherReader = (card, res, fieldsValue) => {
             let ul = document.createElement('ul');
             colWeather.insertAdjacentElement('beforeend', ul);
             typeOfWeather(res[i], ul, textFields);
-            console.log('Aaaaaaaaaaaaaaaaa')
-
         }else {
             console.log('Bbbbbbbbbbbbbbbbbb');
         }
-
         if(dayDifference > 6 && i > 8){
             let ul = document.createElement('ul');
             colWeather.insertAdjacentElement('beforeend', ul);
@@ -92,15 +91,15 @@ let typeOfWeather = (resArr, ul, textFields) => {
         if(textFields[key]){
             
             if(key == 'wind_spd'){
-                renderLi(ul, li, `${textFields[key]} --- ${resArr[key]} m/s`);
+                renderLi(ul, li, `${textFields[key]} : ${resArr[key]} m/s`);
             }
 
             if(key == 'temp'){
-                renderLi(ul, li, `${textFields[key]} --- ${resArr[key]} Celcius`);
+                renderLi(ul, li, `${textFields[key]} : ${resArr[key]} Celcius`);
             }
 
             if(key == 'pop' || key == 'clouds') {
-                renderLi(ul, li, `${textFields[key]} --- ${resArr[key]}%`);
+                renderLi(ul, li, `${textFields[key]} : ${resArr[key]}%`);
             }
 
             if(key == 'datetime') {
@@ -154,7 +153,7 @@ let fetchCityName = async (name, geonames) => {
             return data.geonames[0];
         }else {
             console.log('City not found');
-            throw new Error("Упсиииииииииииии боже мой!");
+            throw new Error("City not found");
             // renderError('City not found');
         }
 }

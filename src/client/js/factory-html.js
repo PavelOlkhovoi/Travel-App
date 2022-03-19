@@ -1,3 +1,4 @@
+import { dateFormatting } from './dates'
 
 // TODO: refactor add Class
 let cardTemplate = () => {
@@ -48,6 +49,15 @@ let cardTemplate = () => {
     return wrapper;
 }
 
+let headOfCard = (card, fieldsValue, res) => {
+    let title = card.querySelector('.card__title');
+    let start = card.querySelector('.card__departing');
+    let finish = card.querySelector('.card__last-day');
+    fieldsValue.city = res.toponymName;
+    title.innerHTML = fieldsValue.city;
+    start.innerHTML = `<em>Start of the trip:</em> ${ dateFormatting(fieldsValue.start) } `
+    finish.innerHTML = `<em>Finish of the trip:</em> ${ dateFormatting(fieldsValue.finish)}`;
+}
 
 
-export { cardTemplate }
+export { cardTemplate, headOfCard }
