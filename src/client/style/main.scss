@@ -30,13 +30,17 @@ em {
     padding-bottom: 3vh;
     font-size: 64px;
     font-weight: 900;
+    @media screen and (max-width: $layout-phone) {
+        font-size: 34px;
+        padding-top: 3vh;
+        padding-bottom: 1vh;
+    }
 }
 
 .head__text {
     padding: 3vh 0;
-    @media screen and (min-width: $layout-phone) {
-        width: 400px;
-        margin: 0 auto;
+    @media screen and (max-width: $layout-phone) {
+        padding: 1vh 0 3vh;
     }
 }
 
@@ -52,28 +56,44 @@ em {
         background-color: #29243C;
         padding: 60px;
         border-radius: 32px;
+        @media screen and (max-width: $layout-phone) {
+            padding: 30px;
+        }
     }
 
     & label {
-        margin-bottom: 16px;
+        // margin-bottom: 16px;
+        margin: 8px 0px;
         font-size: 24px;
         font-weight: 700;
         color: $white;
+        @media screen and (max-width: $layout-phone) {
+            margin: 14px 0px 0px;
+        }
     }
 
     &__input{
         padding: 26px 0;
         text-align: center;
-        margin-bottom: 14px;
+        margin: 8px 0px;
         padding: 16px;
         height: 66px;
-        margin: 0 10px;
+        margin: 10px 10px;
         border-radius: 10px;
         border-color: #E9A6A6;
         background-color: #f1dddd;
+        transition: all 0.4s ease-in;
 
-        @media screen and (min-width: $layout-phone) {
-            // width: 400px;
+        &:hover {
+            background-color: #E9A6A6;
+        }
+
+        &:focus {
+            background-color: #ffffff;
+        }
+
+        @media screen and (max-width: $layout-phone) {
+            min-width: 300px;
         }
     }
 
@@ -93,6 +113,17 @@ em {
         height: 66px;
         border-radius: 10px;
         margin-top: auto;
+        transition: all 0.4s ease-in;
+        &:hover {
+            background-color: #2f274d;
+            border-color: $red;
+        }
+        &:focus {
+            background-color: $blue;
+        }
+        @media screen and (max-width: $layout-phone) {
+            margin: 20px 0px 0px;
+        }
     }
 }
 
@@ -113,10 +144,6 @@ em {
     padding: 3vh 0;
     margin-top: 60px;
 }
-
-// .main__error {
-//     color:rgb(231, 13, 24)
-// }
 
 .main__input.err {
     border: 3px solid $red;

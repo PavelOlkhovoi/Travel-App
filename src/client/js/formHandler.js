@@ -12,7 +12,6 @@ let formHandler = (event) => {
     let weather, geonames, pixabay;
     let card = cardTemplate();
     if(fieldsValue){
-        console.log('We can start fetching');
         getKey()
         .then(res => {
             weather = res.weather;
@@ -36,7 +35,6 @@ let formHandler = (event) => {
         .then(res => {
             let image = card.querySelector('.card__image');
             image.src = res;
-            console.log(res);
 
             document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
 
@@ -44,7 +42,7 @@ let formHandler = (event) => {
 
             return res;
         })
-        .catch(err => console.log('СДержанный катч', err));
+        .catch(err => console.log(err));
     }
     
 }
@@ -74,7 +72,6 @@ let setupWeatherReader = (card, res, fieldsValue) => {
             colWeather.insertAdjacentElement('beforeend', ul);
             typeOfWeather(res[i], ul, textFields);
         }else {
-            console.log('Bbbbbbbbbbbbbbbbbb');
         }
         if(dayDifference > 6 && i > 8){
             let ul = document.createElement('ul');
@@ -91,15 +88,15 @@ let typeOfWeather = (resArr, ul, textFields) => {
         if(textFields[key]){
             
             if(key == 'wind_spd'){
-                renderLi(ul, li, `${textFields[key]} : ${resArr[key]} m/s`);
+                renderLi(ul, li, `${textFields[key]}: ${resArr[key]} m/s`);
             }
 
             if(key == 'temp'){
-                renderLi(ul, li, `${textFields[key]} : ${resArr[key]} Celcius`);
+                renderLi(ul, li, `${textFields[key]}: ${resArr[key]} Celcius`);
             }
 
             if(key == 'pop' || key == 'clouds') {
-                renderLi(ul, li, `${textFields[key]} : ${resArr[key]}%`);
+                renderLi(ul, li, `${textFields[key]}: ${resArr[key]}%`);
             }
 
             if(key == 'datetime') {
@@ -177,9 +174,6 @@ let fetchFoto = async(cityName, key) => {
 }
 
 let addError = (input) => {
-    if(input.dataset.validation="city"){
-        input.placeholder = 'Wrong city name';
-    }
     input.classList.add('err');
 }
 
