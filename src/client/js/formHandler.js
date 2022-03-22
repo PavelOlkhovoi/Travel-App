@@ -198,6 +198,7 @@ function formValidate(linkInput){
 async function getKey(){
     const response = await fetch('http://localhost:8081/key');
     const data = await response.json();
+    console.log(data);
 
     return data
 }
@@ -226,4 +227,4 @@ function renderData(resultObj){
     }
 }
 
-export { formHandler, formValidate, hideResult }
+export { formHandler, formValidate, getKey }

@@ -36,6 +36,7 @@ const keyAPI = {
 }
 // Route to get the API keys
 app.get('/key', (req, res)=> {
+    console.log(keyAPI);
     res.json(keyAPI);
 })
 
