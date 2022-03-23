@@ -1,5 +1,6 @@
 import { cardTemplate, headOfCard } from './factory-html'
-import { dateFormatting, getNumberOfDays} from './dates';
+import { dateFormatting, getNumberOfDays} from './dates'
+import notImg from '../media/img/notcity.jpg'
 
 /**
 * @description Form Handler evokes validate and fetch API functions 
@@ -28,14 +29,16 @@ let formHandler = (event) => {
             return fetchPredictWeather(lat, lng, weather)
         })
         .then(res => {
-            console.log(res);
             setupWeatherReader(card, res, fieldsValue);
             return fetchFoto(fieldsValue.city, pixabay)
         })
         .then(res => {
             let image = card.querySelector('.card__image');
-            image.src = res;
-
+            if(!res){
+                image.src = notImg;
+            }else {
+                image.src = res;
+            }
             document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
 
             clearForm();
@@ -52,6 +55,10 @@ let clearForm = () => {
     for(let i = 0; i < inputs.length; i++){
         inputs[i].value = '';
     }
+}
+
+let renderImg = () => {
+
 }
 
 let setupWeatherReader = (card, res, fieldsValue) => {
@@ -167,9 +174,11 @@ let fetchFoto = async(cityName, key) => {
     try{
         let response = await fetch(`https://pixabay.com/api/?key=${key}&q=${cityName}&image_type=photo`);
         let data = await response.json();
+        let link = data.hits[0].notImg;
+
         return data.hits[0].webformatURL;
     }catch(err){
-        console.log(err);
+        return null
     }
 }
 
@@ -198,7 +207,6 @@ function formValidate(linkInput){
 async function getKey(){
     const response = await fetch('http://localhost:8081/key');
     const data = await response.json();
-    console.log(data);
 
     return data
 }
