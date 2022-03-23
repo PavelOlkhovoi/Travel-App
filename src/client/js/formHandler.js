@@ -33,12 +33,9 @@ let formHandler = (event) => {
             return fetchFoto(fieldsValue.city, pixabay)
         })
         .then(res => {
-            let image = card.querySelector('.card__image');
-            if(!res){
-                image.src = notImg;
-            }else {
-                image.src = res;
-            }
+
+            showImg(res, card);
+            
             document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
 
             clearForm();
@@ -57,8 +54,15 @@ let clearForm = () => {
     }
 }
 
-let renderImg = () => {
-
+let showImg = (res, card) => {
+    let image = card.querySelector('.card__image');
+    if(!res){
+        image.src = notImg;
+        return false;
+    }else {
+        image.src = res;
+        return true;
+    }
 }
 
 let setupWeatherReader = (card, res, fieldsValue) => {
