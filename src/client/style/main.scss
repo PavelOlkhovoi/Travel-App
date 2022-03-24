@@ -85,7 +85,8 @@ em {
         transition: all 0.4s ease-in;
 
         &:hover {
-            background-color: #E9A6A6;
+            cursor: pointer;
+            background-color: #9bec90;
         }
 
         &:focus {
@@ -115,8 +116,9 @@ em {
         margin-top: auto;
         transition: all 0.4s ease-in;
         &:hover {
+            cursor: pointer;
             background-color: #2f274d;
-            border-color: $red;
+            border-color: transparent;
         }
         &:focus {
             background-color: $blue;

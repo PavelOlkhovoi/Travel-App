@@ -6,7 +6,7 @@
     "test": "jest",
     "start": "node src/server/index.js",
     "dev": "webpack-dev-server --config webpack.dev.js --open",
-    "prod": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "",
   "license": "ISC",

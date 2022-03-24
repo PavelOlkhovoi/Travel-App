@@ -1,7 +1,6 @@
 import "./style/resets.scss";
 import "./style/base.scss";
 import "./style/main.scss";
-import "./style/footer.scss";
 
 import { getToday } from "./js/dates"
 import { formHandler } from "./js/formHandler";
