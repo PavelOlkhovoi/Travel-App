@@ -209,10 +209,16 @@ function formValidate(linkInput){
 * @returns {object} Key - Custom object that will send on server
 */
 async function getKey(){
-    const response = await fetch('http://localhost:8081/key');
-    const data = await response.json();
-
-    return data
+    const response = await fetch('http://localhost:8081/key', {
+        credentials: "same-origin"
+    });
+    console.log(response.status);
+    try{
+        const data = await response.json();
+        return data
+    }catch(error){
+        console.log(error);
+    }
 }
 
 /**

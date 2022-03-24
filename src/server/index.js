@@ -3,12 +3,9 @@ const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-// Get root folder
-const rootPath = path.resolve('../../');
+
 // Dotenv Configuration
-const result = dotenv.config({ path: path.resolve(rootPath, '.env')})
-// Path of the main page
-const distPath = path.resolve(rootPath, 'dist', 'index.html');
+const result = dotenv.config({ path: '.env'});
 
 // Start up an instance of app
 const app = express()
@@ -22,11 +19,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 // Initialize the main project folder
-app.use(express.static(path.resolve(rootPath, 'dist')))
+app.use(express.static('dist'));
 
 // Route to get index.html
 app.get('/', function (req, res) {
-    res.sendFile(distPath)
+    res.sendFile('index.html');
 })
 // Object with keys for API
 const keyAPI = {
