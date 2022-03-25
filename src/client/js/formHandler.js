@@ -188,7 +188,9 @@ let fetchFoto = async(cityName, key) => {
 }
 
 let addError = (input) => {
+    input.value += ' Wrong Name';
     input.classList.add('err');
+    console.log('testim');
 }
 
 let removeError = (input) => {
@@ -213,7 +215,6 @@ async function getKey(){
     const response = await fetch('http://localhost:8081/key', {
         credentials: "same-origin"
     });
-    console.log(response.status);
     try{
         const data = await response.json();
         return data

@@ -26,3 +26,6 @@ cancel();
  hideResult();
 // Handler the form submit
 form.addEventListener('submit', formHandler);
+form.addEventListener('input', ()=> {
+    document.querySelector('.city').classList.remove('err');
+});

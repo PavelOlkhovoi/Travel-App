@@ -149,6 +149,10 @@ em {
 
 .main__input.err {
     border: 3px solid $red;
+    color: red;
+    &:focus {
+        color: red;
+    }
 }
 
 .reply__message {
