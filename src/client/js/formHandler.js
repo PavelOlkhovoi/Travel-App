@@ -11,7 +11,8 @@ let formHandler = (event) => {
     let inputs = document.querySelectorAll('.main__input');
     let fieldsValue = validatePattern(inputs);
     let weather, geonames, pixabay;
-    let card = cardTemplate();
+    let card = cardTemplate(fieldsValue.city);
+
     if(fieldsValue){
         getKey()
         .then(res => {
@@ -39,7 +40,7 @@ let formHandler = (event) => {
             document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
 
             clearForm();
-
+            showResult();
             return res;
         })
         .catch(err => console.log(err));
@@ -224,16 +225,18 @@ async function getKey(){
 /**
 * @description Hide the results block 
 */
-function hideResult(){
+let hideResult = ()=> {
     document.querySelector('.reply').classList.remove('active');
 }
 
 /**
 * @description Show the results block 
 */
-function showResult(){
+let showResult = () => {
     document.querySelector('.reply').classList.add('active');
 }
+
+
 
 /**
 * @description Send data from API to APP
@@ -245,4 +248,4 @@ function renderData(resultObj){
     }
 }
 
-export { formHandler, formValidate, getKey }
+export { formHandler, formValidate, getKey, hideResult}

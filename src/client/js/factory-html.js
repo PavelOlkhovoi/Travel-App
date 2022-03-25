@@ -1,9 +1,11 @@
 import { dateFormatting } from './dates'
 
 // TODO: refactor add Class
-let cardTemplate = () => {
+let cardTemplate = (city) => {
     let wrapper = document.createElement('div');
     wrapper.classList.add('reply__card', 'card');
+
+    wrapper.setAttribute('id', city);
 
     let container = document.createElement('div');
     container.classList.add('card__container');
@@ -22,6 +24,8 @@ let cardTemplate = () => {
     colFoto.insertAdjacentElement('afterbegin', imageWrapper);
     imageWrapper.insertAdjacentElement('afterbegin', image)
 
+
+    // TODO: Sectiont HEAD 
     let colText = document.createElement('div');
     colText.classList.add('card__info'),
     container.insertAdjacentElement('beforeend', colText);
@@ -39,6 +43,15 @@ let cardTemplate = () => {
 
     colText.insertAdjacentElement('beforeend', startOfTrip);
     colText.insertAdjacentElement('beforeend', endOfTrip);
+
+    let cancel = document.createElement('div');
+    cancel.classList.add('card__cancel');
+    cancel.innerHTML = `Cancel`;
+
+    cancel.setAttribute('data-city', city);
+
+    colText.insertAdjacentElement('beforeend', cancel);
+
 
     let colWeather = document.createElement('div');
     colWeather.classList.add('card__weather');
