@@ -43,4 +43,15 @@ let getNumberOfDays = (start) => {
     return diffInDays;
 }
 
-export { dateFormatting, getNumberOfDays, getToday }
+/**
+* @description Set up current day for the input
+* @param {object} - Object with data
+*/
+let setUpDateInInput = () => {
+let dateInputs = document.querySelectorAll('.day');
+for(let i = 0; i < dateInputs.length; i++){
+    dateInputs[i].setAttribute('min', getToday());
+}
+} 
+
+export { dateFormatting, getNumberOfDays, getToday, setUpDateInInput }
