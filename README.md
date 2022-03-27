@@ -1,7 +1,7 @@
 # The travel planner app
 
 ## Overview
-This app allows users to plan their travel routes. The app shows current weather if the trip is within a week. If not, you can see the predicted forecast. We can predict the weather only for the nearest 16 days.
+This app allows users to plan their travel routes. The app shows weather forecast for 1 week that includes the date of the depature. It is able to predict the weather only for the 16 days starting from the current date.
 The app fetches data from "Weatherbit", "Geonames" and "Pixabay" API. I have built the app by vanilla JS, Webpack, Express, Jest and Service Workers.
 
 ## Usage
