@@ -13,14 +13,16 @@ const btn = document.querySelector('.main__btn');
 // Get sending button
 const form = document.querySelector('.main__form');
 
+// Set up current day in the input
 setUpDateInInput();
 
+// Event Listener which deletes a trip Card by click
 cancel();
-
 
 
 // Hide the result section
  hideResult();
+
 // Handler the form submit
 form.addEventListener('submit', formHandler);
 form.addEventListener('input', ()=> {

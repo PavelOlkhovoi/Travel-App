@@ -1,6 +1,10 @@
 import { dateFormatting } from './dates'
 
-// TODO: refactor add Class
+/**
+* @description Create HTML structure of the travel card
+* @param {string} - The city name
+* @returns {html} - The card HTML template
+*/
 let cardTemplate = (city) => {
     let wrapper = document.createElement('div');
     wrapper.classList.add('reply__card', 'card');
@@ -25,7 +29,6 @@ let cardTemplate = (city) => {
     imageWrapper.insertAdjacentElement('afterbegin', image)
 
 
-    // TODO: Sectiont HEAD 
     let colText = document.createElement('div');
     colText.classList.add('card__info'),
     container.insertAdjacentElement('beforeend', colText);
@@ -62,6 +65,10 @@ let cardTemplate = (city) => {
     return wrapper;
 }
 
+/**
+* @description Create HTML header of the travel card
+* @param { html, object, object } - The travel card / Start and end the trip / The city date
+*/
 let headOfCard = (card, fieldsValue, res) => {
     let title = card.querySelector('.card__title');
     let start = card.querySelector('.card__departing');

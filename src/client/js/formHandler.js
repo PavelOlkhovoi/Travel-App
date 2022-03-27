@@ -3,8 +3,8 @@ import { dateFormatting, getNumberOfDays} from './dates'
 import notImg from '../media/img/notcity.jpg'
 
 /**
-* @description Form Handler evokes validate and fetch API functions 
-* @param {event} Click - Should be a button 
+* @description Form Handler evokes validate function, get keys from the server-side, fetch API functions, display the travel card
+* @param {event} submit
 */
 let formHandler = (event) => {
     event.preventDefault();
@@ -36,7 +36,6 @@ let formHandler = (event) => {
         .then(res => {
 
             showImg(res, card);
-            
             document.querySelector('.reply__directions').insertAdjacentElement('afterend', card);
 
             clearForm();
@@ -45,9 +44,11 @@ let formHandler = (event) => {
         })
         .catch(err => console.log(err));
     }
-    
 }
 
+/**
+* @description Clear old text in inputs
+*/
 let clearForm = () => {
     let inputs = document.querySelectorAll('.main__input');
     for(let i = 0; i < inputs.length; i++){
@@ -55,6 +56,11 @@ let clearForm = () => {
     }
 }
 
+/**
+* @description Print the default foto or foto from API
+* @param {link, html} - link on image / the travel card 
+* @returns {boolean}
+*/
 let showImg = (res, card) => {
     let image = card.querySelector('.card__image');
     if(!res){
@@ -66,6 +72,10 @@ let showImg = (res, card) => {
     }
 }
 
+/**
+* @description Set up rules on how to display weather data and check the type of forecast
+* @param {html, object, object} - the travel card / wether data / start and end the trip 
+*/
 let setupWeatherReader = (card, res, fieldsValue) => {
     let textFields = {
         datetime: 'Valid date',
@@ -93,6 +103,10 @@ let setupWeatherReader = (card, res, fieldsValue) => {
     }
 }
 
+/**
+* @description Set up how to display weather messers like wind speed, temperature, clouds...
+* @param {object, html, object} - wether data / weather list ul / the pattern that displays weather fields
+*/
 let typeOfWeather = (resArr, ul, textFields) => {
     for(let key in resArr){
         let li = document.createElement('li');
@@ -119,11 +133,20 @@ let typeOfWeather = (resArr, ul, textFields) => {
     }
 }
 
+/**
+* @description Display items in the weather list
+* @param {html, html, text, text} - ul / li / pattern how to display weather fields
+*/
 let renderLi = (ul, li, text, place = 'beforeend') => {
     li.innerHTML = text;
     ul.insertAdjacentElement(place, li);
 }
 
+/**
+* @description Validate date. Save data in object or false if the data is wrong, add class 'error' 
+* @param {html} - All inputs
+* @returns {boolean or object} - false or object
+*/
 let validatePattern = (inputs) => {
     let patterns = {
         city: /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/,
@@ -152,7 +175,11 @@ let validatePattern = (inputs) => {
     return status ? result : status;
 }
 
-
+/**
+* @description Fetch the data about the city from Geonames API
+* @param {string, string} - City / API key
+* @returns {object} - The object that contains data about the city
+*/
 let fetchCityName = async (name, geonames) => {
 
     let response = await fetch(`http://api.geonames.org/searchJSON?q=${name}&maxRows=1&username=${geonames}`);
@@ -165,6 +192,11 @@ let fetchCityName = async (name, geonames) => {
         }
 }
 
+/**
+* @description Fetch the weather from Weatherbit API
+* @param {string, string, string} - latitude / longitude / Key for API 
+* @returns {object} - The object that contains weather data for 16 days
+*/
 let fetchPredictWeather = async (lat, lon, key) => {
     try{
         let response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}`);
@@ -174,7 +206,11 @@ let fetchPredictWeather = async (lat, lon, key) => {
         console.log(error);
     }
 }
-
+/**
+* @description Fetch city photo from Pixabay API
+* @param {string, string} - The city name / Key for API 
+* @returns {link} - link to the foto or error
+*/
 let fetchFoto = async(cityName, key) => {
     try{
         let response = await fetch(`https://pixabay.com/api/?key=${key}&q=${cityName}&image_type=photo`);
@@ -187,26 +223,23 @@ let fetchFoto = async(cityName, key) => {
     }
 }
 
+/**
+* @description Add the class "err" and display a message in a placeholder
+* @param {html} - The input that contains the travel name
+*/
 let addError = (input) => {
     input.value += ' Wrong Name';
     input.classList.add('err');
-    console.log('testim');
 }
 
+/**
+* @description Remove the class "err"
+* @param {html} - The input that contains the travel name
+*/
 let removeError = (input) => {
     input.classList.remove('err');
 }
 
-/**
-* @description Form validate 
-* @param {string} url - The link that should be evaluated
-* @returns {boolean} - Tru / false 
-*/
-function formValidate(linkInput){
-    // Simple regexp to check the first part of the link
-    let test = /^https{0,1}:\/\/+\w*\.+.*/.test(linkInput);
-    return test;
-}
 /**
 * @description The get request to the internal server to get the API key 
 * @returns {object} Key - Custom object that will send on server
@@ -238,15 +271,4 @@ let showResult = () => {
 }
 
 
-
-/**
-* @description Send data from API to APP
-* @param {object} - Object with data
-*/
-function renderData(resultObj){
-    for (let key in resultObj){
-        document.getElementById(key).innerHTML = `${key}: <em>${resultObj[key]}</em>`;
-    }
-}
-
-export { formHandler, formValidate, getKey, hideResult}
+export { formHandler, getKey, hideResult}

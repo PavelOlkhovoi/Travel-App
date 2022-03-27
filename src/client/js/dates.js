@@ -1,3 +1,8 @@
+/**
+* @description Set up how to display the date 
+* @param { string } - The date 
+* @returns { string } - The formated date
+*/
 let dateFormatting = (data)=> {
     let arrayData = data.split('-');
     let setData = new Date(arrayData[0], arrayData[1]-1, arrayData[2]);
@@ -6,9 +11,15 @@ let dateFormatting = (data)=> {
     return `${day} ${arrayData[2]} ${month}`
 }
 
+// Array with day weeks 
 let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+// Array with month names 
 let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+/**
+* @description Set up current data
+* @returns { string } - Data format 2022-03-26
+*/
 let getToday = () => {
     let today = new Date();
     let day = today.getDate();
@@ -26,6 +37,11 @@ let getToday = () => {
 
 }
 
+/**
+* @description Calculates the number of days of travel  
+* @param { string } - The start trip data  
+* @returns { number } - Number of days
+*/
 let getNumberOfDays = (start) => {
     let rowData = start.split('-');
     const dateStart = new Date(rowData[0], rowData[1]-1, rowData[2]);
@@ -37,7 +53,7 @@ let getNumberOfDays = (start) => {
     // Calculating the time difference between two dates
     const diffInTime = dateStart.getTime() - today.getTime();
 
-    // Calculating the no. of days between two dates
+    // Calculating the number of days between two dates
     const diffInDays = Math.round(diffInTime / oneDay);
 
     return diffInDays;
